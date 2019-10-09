@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(void) {
+
+   char userInput[50];
+	int lengthOfStr = 0;
+	int realNums = 0;
+	int charValue = 0;
+
+	scanf("%s", userInput);
+	lengthOfStr = strlen(userInput);
+
+	for (int i = 0; i < lengthOfStr; i++)
+	{
+		charValue = userInput[i];
+		if (charValue < 48 || charValue > 57)
+		{
+			printf("no\n");
+			realNums = 1;
+			break;
+		}
+	}
+	if (realNums == 0)
+	{
+		printf("yes\n");
+	}
+
+   return 0;
+}
