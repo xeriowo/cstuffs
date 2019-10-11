@@ -1,0 +1,59 @@
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings (and errors) when using non-secure versions of printf, scanf, strcpy, etc.
+#include <stdio.h> // Needed for working with printf and scanf
+
+int main(void)
+{
+	// Constant and Variable Declarations
+	// consts
+	const int INPUT_MIN = 2; // minimum numeric input
+	const int INPUT_MAX = 10; // max numeric input
+	const int NUM_ONE = 1; // literally 1
+	const int NUM_ZERO = 0; // zero to reset an accumulator value
+
+	// vars
+	int userInput = 0; // users input
+	int additionCount = 0; // keeps track of the addition sum at the end of each line
+
+
+	// *** Your program goes here ***
+	// *** input ***
+	printf("Enter an integer between %d and %d inclusive: ", INPUT_MIN, INPUT_MAX);
+	scanf("%d", &userInput);
+
+	// validation of input
+	while ((userInput < INPUT_MIN) || (userInput > INPUT_MAX))
+	{
+		printf("   The number entered, %d, must be between %d and %d.\n", userInput, INPUT_MIN, INPUT_MAX);
+		printf("   Please re-enter an integer between %d and %d inclusive: ", INPUT_MIN, INPUT_MAX);
+		scanf("%d", &userInput);
+	}
+	printf("\n"); // blank line
+
+	// *** process and output ***
+	printf("Here are the multiplication tables from %d to %d:\n", NUM_ONE, userInput);
+
+	for (int i = NUM_ONE; i <= userInput; i++) // for loop to display the first number in the multiplication problem
+	{
+		printf("\n"); // blank line
+
+		for (int j = NUM_ONE; j <= INPUT_MAX; j++) // for loop to display the second number in the multiplication problem
+		{
+			printf("%d x %d\t= ", i, j); // printing 1st number x 2nd number with a tab then equals sign
+
+			for (int k = NUM_ONE; k <= j; k++) // for loop to display the first number however many times it is multiplied
+			{
+				printf("%d ", i); // prints the first number in the multiplication problem
+				if ((j != NUM_ONE) && (k != j)) // if statment to print + after every digit as long as there is more than one
+				{								// and to not print + at the end (before the equals sign)
+					printf("+ ");
+				}
+				additionCount += i; // accumulator to answer all of the addition at the end of the statement
+			}
+			printf("= %d\n", additionCount); // displaying the accumulator answer
+			additionCount = NUM_ZERO; // resetting the accumulator
+		}
+	}
+
+	printf("\n"); // final blank line
+	return 0;
+} // end main()
