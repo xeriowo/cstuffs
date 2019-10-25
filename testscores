@@ -1,0 +1,66 @@
+// Programmer:		Jacob Lloyd
+// Date:			10/23/2019
+// Program Name:	Test Scores
+// Chapter:			Chapter 5 - Arrays
+// Description:		This program will ask for the name and test score of each student. The program will then
+//					calculate the average of all score, and display all name and scores for anyone with an above average score.
+
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings (and errors) when using non-secure versions of printf, scanf, strcpy, etc.
+#include <stdio.h> // Needed for working with printf and scanf
+
+int main(void)
+{
+	// Constant and Variable Declarations
+	// consts
+	const double MIN_SCORE = 0.00; // minimum test score input
+	const double MAX_SCORE = 100.00; // maximum test score input
+	const int NUM_OF_STUDENTS = 8; // number of students and scores
+
+	//vars
+	char studentNames[NUM_OF_STUDENTS][15]; // string array for student names
+	double studentScores[NUM_OF_STUDENTS]; // double array for student scores
+	double sumForAvg = 0.00; // holds the sum of scores for avg calculation
+	double avgOfScores = 0.00; // average of all scores
+
+	// *** Your program goes here ***
+	// input
+	for (int i = 0; i < NUM_OF_STUDENTS; i++)
+	{
+		printf("Enter student name #%d: ", i + 1); // prompt for name input
+		scanf("%s", &studentNames[i]); // saving name input
+		printf("Enter the score for %s: ", studentNames[i]); // prompt for score input
+		scanf("%lf", &studentScores[i]); // saving score input
+		while ((studentScores[i] < MIN_SCORE) || (studentScores[i] > MAX_SCORE)) // validation of input
+		{
+			printf("  The score entered for %s was not in the range of %.1lf to %.1lf.\n", studentNames[i], MIN_SCORE, MAX_SCORE);
+			printf("  Please re-enter the score for %s: ", studentNames[i]);
+			scanf("%lf", &studentScores[i]);
+		}
+		printf("\n"); // blank line after name and score
+	}
+	printf("\n"); // blank line
+
+	// process & output
+	// finding average of all scores
+	for (int i = 0; i < NUM_OF_STUDENTS; i++)
+	{
+		sumForAvg += studentScores[i]; // summing all scores
+	}
+	avgOfScores = sumForAvg / NUM_OF_STUDENTS; // averaging all scores from saved sum / number of students
+	// output of avg
+	printf("The average of the scores is %.1lf%%.\n", avgOfScores); // average score output
+	printf("\n"); // blank line after average of scores output
+
+	// determining above average students and outputting their names and scores
+	for (int i = 0; i < NUM_OF_STUDENTS; i++)
+	{
+		if (studentScores[i] > avgOfScores) // checking if student score in current element is > than average score
+		{
+			// if score is > average, program prints name and score
+			printf("%s has a score of %.1lf, which is above average.\n", studentNames[i], studentScores[i]);
+		}
+	}
+
+	printf("\n"); // final blank line
+	return 0;
+} // end main()
