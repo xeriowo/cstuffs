@@ -1,0 +1,84 @@
+// Programmer:		Jacob Lloyd
+// Date:			10/19/2019
+// Program Name:	Football Score
+// Chapter:			Chapter 5 - Arrays
+// Description:		This program will ask the user to input the score for the home team and away team for each quarter.
+//					The program will validate the input and accumulate the scores to display the final standing for each
+//					quarter. The program will also output the winner.
+
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings (and errors) when using non-secure versions of printf, scanf, strcpy, etc.
+#include <stdio.h> // Needed for working with printf and scanf
+
+int main(void)
+{
+	// Constant and Variable Declarations
+	// consts
+	const int ARRAY_SIZE = 5; // array size (1 greater than needed to ignore element 0)
+	const int SCORE_MIN = 0; // minimum score input
+	const int STARTING_QUARTER = 1; // to ensure the loops start at 1 since we are ignoring element 0
+
+	// vars
+	int homeScore[ARRAY_SIZE]; // array for home teams score
+	int awayScore[ARRAY_SIZE]; // array for away teams score
+	int homeAccumulator = 0; // used to accumulate home teams score for quarterly output
+	int awayAccumulator = 0; // used to accumulate away teams score for quarterly output
+
+	// *** Your program goes here ***
+	// *** input ***
+	// asking home and away scores for each quarter
+	for (int i = STARTING_QUARTER; i < ARRAY_SIZE; ++i)
+	{
+		printf("How many points were scored by the Home team in quarter #%d? ", i); // output requesting home input
+		scanf("%d", &homeScore[i]); // input for home score
+		while (homeScore[i] < SCORE_MIN) // validating home score is 0 or more
+		{
+			printf("   The number entered cannot be negative. Please re-enter the score: "); // asking to re-enter if home score is less than 0
+			scanf("%d", &homeScore[i]); // re-input for home score
+		}
+		printf("How many points were scored by the Away team in quarter #%d? ", i); // output requesting away input
+		scanf("%d", &awayScore[i]); // input for away score
+		while (awayScore[i] < SCORE_MIN) // validating away score is 0 or more
+		{
+			printf("   The number entered cannot be negative. Please re-enter the score: "); // asking to re-enter if away score is less than 0
+			scanf("%d", &awayScore[i]);  // re-input for away score
+		}
+		printf("\n"); // blank line between home and away scores
+	}
+	
+	// *** process & output ***
+	// output and header for team scores output
+	printf("After each quarter, the score was:\n");
+	printf("\t H\t A\n"); // H and A indicators
+	printf("\t---\t---\n"); // lines under H and A
+
+	// loop for the output of the quarters and team score, accumulated every quarter
+	for (int i = STARTING_QUARTER; i < ARRAY_SIZE; ++i)
+	{
+		printf("Q%d\t ", i); // output for quarter 'Q' and quarter number
+		homeAccumulator = SCORE_MIN; // resetting home accumulator because you wanted it to run from 1 to current quarter
+		awayAccumulator = SCORE_MIN; // resetting away accumulator because you wanted it to run from 1 to current quarter
+		for (int j = STARTING_QUARTER; j <= i; ++j) // inside loop to accumulate each teams scores and display quarterly scores
+		{
+			homeAccumulator = homeAccumulator + homeScore[j]; // accumulating home teams score
+			awayAccumulator = awayAccumulator + awayScore[j]; // accumulating away teams score
+		}
+		printf("%d\t ", homeAccumulator); // displaying home teams score
+		printf("%d\n", awayAccumulator); // displaying away teams score
+	}
+	// decision to output the winning team or a tie
+	if (homeAccumulator > awayAccumulator)
+	{
+		printf("Yea! The Home Team Won!\n"); // if home wins
+	}
+	else if (homeAccumulator < awayAccumulator)
+	{
+		printf("Sorry, the Away Team won.\n"); // if away wins
+	}
+	else
+	{
+		printf("After %d quarters, the score was tied.\n", ARRAY_SIZE - 1); // if they tie (array_size - 1 since we made the
+	}																		// array 1 larger to ignore element 0)
+
+	printf("\n"); // final blank line
+	return 0;
+} // end main()
