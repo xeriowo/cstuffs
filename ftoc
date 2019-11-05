@@ -1,0 +1,78 @@
+// Program Name:	F to C
+// Chapter:			Chapter 6 - Functions
+// Description:		The program will ask the user to input a start temp between -100 and 300 and then an end temp between
+//					the starting temp and 300. The program will then display a conversion table for all temps in that range.
+
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings (and errors) when using non-secure versions of printf, scanf, strcpy, etc.
+#include <stdio.h> // Needed for working with printf and scanf
+
+// functions
+// taking each iteration from start -> end and converting it to celcius, then returning that value
+double ConvertFahrToCels(int fahrTemp)
+{
+	double convertedTemp = 0.0;
+
+	convertedTemp = ((double)5 / 9) * (fahrTemp - 32);
+
+	return convertedTemp;
+}
+
+
+int main(void)
+{
+	// Constant and Variable Declarations
+	// consts
+	const int MIN_TEMP = -100; // minimum temperature for input
+	const int MAX_TEMP = 300; // maximum temperature for input
+
+	// vars
+	int startingTemp = 0; // user input starting temp
+	int endingTemp = 0; // user input ending temp
+	double convertedTemp = 0.0; // holds each iteration of convertedTemp through the function call for output
+
+	// *** Your program goes here ***
+	// input
+	// input and validation for starting temp
+	printf("Enter a starting Fahrenheit temperature: ");
+	scanf("%d", &startingTemp);
+	while ((startingTemp < MIN_TEMP) || (startingTemp > MAX_TEMP))
+	{
+		printf("   The starting temperature must be between %d and %d degrees.\n", MIN_TEMP, MAX_TEMP);
+		printf("   Please re-enter the starting temperature: ");
+		scanf("%d", &startingTemp);
+	}
+	// input and validation for ending temp
+	printf("Enter an ending Fahrenheit temperature: ");
+	scanf("%d", &endingTemp);
+	while ((endingTemp < startingTemp) || (endingTemp > MAX_TEMP))
+	{
+		if (endingTemp < startingTemp) // if endingTemp is less than startingTemp, proper error will display
+		{
+			printf("   The ending temperature, %d, must be greater than the starting temperature.\n", endingTemp);
+			printf("   Please re-enter the ending temperature: ");
+			scanf("%d", &endingTemp);
+		}
+		else // if endingTemp is greater than startingTemp, but greater than MAX_TEMP, proper error will display
+		{
+			printf("   The ending temperature must be between %d and %d degrees.\n", MIN_TEMP, MAX_TEMP);
+			printf("   Please re-enter the ending temperature: ");
+			scanf("%d", &endingTemp);
+		}
+	}
+	printf("\n"); // blank line after input
+
+	// process and output
+	// table title
+	printf("Fahrenheit\tCelsius\n");
+
+	// loop for calculating and displaying
+	for (int i = startingTemp; i <= endingTemp; i++) // starting the increment at starting temp
+	{
+		convertedTemp = ConvertFahrToCels(i); // sending i (starting temp) to the function to convert
+		printf("%d\t\t%.1lf\n", i, convertedTemp); // printing i (starting temp) and convertedTemp
+	}
+
+
+	printf("\n"); // final blank line
+	return 0;
+} // end main()
