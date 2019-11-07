@@ -1,0 +1,68 @@
+// Program Name:	MyPow
+// Chapter:			Chapter 6 - Functions
+// Description:		2This program will ask the user to input a number, and then another number to raise the first number to.
+//					Displayed will be the answer to x^y using my own pow function, as well as the original pow function.
+
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings (and errors) when using non-secure versions of printf, scanf, strcpy, etc.
+#include <stdio.h> // Needed for working with printf and scanf
+#include <math.h> // Needed for pow() function
+
+// functions
+// function to provide the power of a number from base input and powered input
+double MyPow(double baseNum, double powerNum)
+{
+	double powCalculated = 0.0;
+	double powerAccum = 1.0;
+	double negativeConverted = 0.0;
+
+	if (powerNum < 0) // if powered number is negative
+	{
+		negativeConverted = powerNum * -1; // converting to positive
+		for (int i = 0; i < negativeConverted; i++) // loop to accumulate each iteration of a power
+		{
+			powerAccum = powerAccum * baseNum;
+		}
+		powerAccum = 1 / powerAccum; // dividing by 1 to provide correct power to a negative number
+	}
+	else // if powered number is positive
+	{
+		for (int i = 0; i < powerNum; i++) // loop to accumulate each iteration of a power
+		{
+			powerAccum = powerAccum * baseNum;
+		}
+	}
+	return powerAccum;
+}
+
+
+int main(void)
+{
+	// Constant and Variable Declarations
+	// vars
+	double baseNum = 0; // user input for base number
+	double powerNum = 0; // user input for the power of base num
+
+	double myPowAnswer = 0.0; // answer from the function I created
+	double normPowAnswer = 0.0; // answer from the standard pow() function in <math.h> library
+
+	// *** Your program goes here ***
+	// input
+	printf("Enter a number to raise to a power: ");
+	scanf("%lf", &baseNum);
+	printf("Enter the power to raise %.2lf to: ", baseNum);
+	scanf("%lf", &powerNum);
+	printf("\n"); // blank line
+
+	// process
+	myPowAnswer = MyPow(baseNum, powerNum);
+	normPowAnswer = pow(baseNum, powerNum);
+
+	// output
+	printf("%.2lf raised to the power of %.0lf is:\n", baseNum, powerNum);
+	printf("MyPow() function\tpow() function\n");
+	printf("%lf\t\t%lf\n", myPowAnswer, normPowAnswer);
+
+
+	printf("\n"); // final blank line
+	return 0;
+} // end main()
